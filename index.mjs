@@ -1,11 +1,17 @@
 import express, { application } from "express";
 import path from "path";
+import os from "os";
 import { engine } from "express-handlebars";
 import session from "express-session";
 import FileStore from "session-file-store";
+const MysqlStore = FileStore(session);
 import flash from "express-flash";
 
 import conn from "./db/conn.mjs";
+
+// Models
+import User from "./models/User.mjs";
+import Tought from "./models/Tought.mjs";
 
 const app = express();
 
@@ -32,9 +38,9 @@ app.use(
     secret: "nosso_secret",
     resave: false,
     saveUninitialized: false,
-    store: new FileStore({
+    store: new MysqlStore({
       logFn: function () {},
-      path: path.join(require("os").tmpdir(), "sessions"),
+      path: path.join(os.tmpdir(), "sessions"),
     }),
     cookie: {
       secure: false,
