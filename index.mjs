@@ -9,9 +9,15 @@ import flash from "express-flash";
 
 import conn from "./db/conn.mjs";
 
+// Routes
+import toughtsRouter from "./routes/toughtsRouter.mjs";
+
 // Models
 import User from "./models/User.mjs";
 import Tought from "./models/Tought.mjs";
+
+// Controllers
+import ToughtController from "./controllers/ToughtController.mjs";
 
 const app = express();
 
@@ -62,6 +68,11 @@ app.use((req, res, next) => {
 
   next();
 });
+
+// Routes
+app.use("/toughts", toughtsRouter);
+
+app.get('/', ToughtController.showToughts)
 
 conn
   .sync()
