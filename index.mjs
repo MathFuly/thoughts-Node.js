@@ -11,6 +11,7 @@ import conn from "./db/conn.mjs";
 
 // Routes
 import toughtsRouter from "./routes/toughtsRouter.mjs";
+import authRouter from "./routes/authRoutes.mjs";
 
 // Models
 import User from "./models/User.mjs";
@@ -71,8 +72,9 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/toughts", toughtsRouter);
+app.use("/", authRouter);
 
-app.get('/', ToughtController.showToughts)
+app.get("/", ToughtController.showToughts);
 
 conn
   .sync()
